@@ -1,3 +1,6 @@
+import os
+import json
+import tempfile
 import streamlit as st
 import gspread
 import openpyxl
@@ -66,7 +69,8 @@ if st.button("🚀 Tarik Data & Generate Excel", use_container_width=True):
             
             try:
                 # 1. TARIK DATA DARI GOOGLE SHEETS
-                gc = gspread.service_account(filename="credentials.json")
+                from creds_helper import get_gspread_client
+                gc = get_gspread_client()
                 sheet = gc.open_by_key(spreadsheet_id).sheet1
                 data_mentah = sheet.get_all_records()
                 df_data = pd.DataFrame(data_mentah)
